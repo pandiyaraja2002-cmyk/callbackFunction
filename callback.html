@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <h1> CallBack Function </h1>
+
+    <h2>Callback + Promise Example</h2>
+    <button onclick="processData(handleResult)">Run Function</button>
+
+    <p id="output"></p>
+
+    <script>
+        function sanjai(name,saybye){
+            console.log("Hello, " + name);
+            saybye();
+            alert(saybye + "call 1");
+        }
+
+        alert(saybye + "call 2")
+        function saybye(){
+            console.log("GoodBye!");
+        }
+
+        sanjai("pandi",saybye)
+
+        // function fetchData(handleData){
+        //     fetch('https://jsonplaceholder.typicode.com/todos/1')
+
+        //     .then(function(response){
+        //         return response.json();
+        //     })
+
+        //     .then(function(data){
+        //         handleData(data);
+        //     })
+
+        //     .catch(function(error){
+        //         console.log("Error:", error);
+        //     });
+        // }
+
+
+        // Function that accepts a callback
+        function processData(callback) {
+            document.getElementById("output").innerHTML = "Processing data...";
+
+            // Create a Promise
+            let promise = new Promise(function(resolve, reject) {
+                let success = true; // change to false to test reject
+
+                setTimeout(function() {
+                    if (success) {
+                        resolve("Data processed successfully!");
+                    } else {
+                        reject("Error processing data!");
+                    }
+                }, 1000);
+            });
+
+            // Handle Promise using then and catch
+            promise
+                .then(function(result) {
+                    callback(null, result);
+                })
+                .catch(function(error) {
+                    callback(error, null);
+                });
+        }
+
+        // Callback function
+        function handleResult(error, data) {
+            if (error) {
+                document.getElementById("output").innerHTML = "Callback Error: " + error;
+            } else {
+                document.getElementById("output").innerHTML = "Callback Success: " + data;
+            }
+        }
+
+      
+
+    </script>
+</body>
+</html>
